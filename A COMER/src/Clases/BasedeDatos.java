@@ -32,7 +32,7 @@ public class BasedeDatos {
 	
 	public void crearTablasBD() {
 		String sql1 = "CREATE TABLE Comensal IF DOESNT EXISTS (correo VARHCAR(20), contraseña VARCHAR(20), nombre VARCHAR(20), apellido VARCHAR(20))";
-		String sql2 = "CREATE TABLE Restaurante IF DOESNT EXISTS (correo VARHCAR(20), contraseña VARCHAR(20), nombre VARCHAR(20), direccion VARCHAR(20), tipo VARCHAR(20), valoracion INT(1))"; //Como hago un float
+		String sql2 = "CREATE TABLE Restaurante IF DOESNT EXISTS (correo VARHCAR(20), contraseña VARCHAR(20), nombre VARCHAR(20), direccion VARCHAR(20), tipo VARCHAR(20), valoracion INT(1), apertura INT(2), cierre INT(2)"; //Como hago un float
 		String sql3 = "CREATE TABLE Valoracion IF NOT EXISTS (codigo CHAR(4), usuario VARCHAR(20), restaurante VARCHAR(20), fecha DATE, estrellas INT(1), analisis VARCHAR(50))";
 		String sql4 = "CREATE TABLE Respuesta IF NOT EXISTS (valoracion CHAR(4), fecha DATE, respuesta VARHCAR(50))";
 		

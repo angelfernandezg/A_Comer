@@ -6,17 +6,20 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
+import javax.swing.JList;
 
 public class VentanaBuscador2 extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
-
+	private SpinnerNumberModel valoresSpinner;
 	/**
 	 * Launch the application.
 	 */
@@ -50,16 +53,25 @@ public class VentanaBuscador2 extends JFrame {
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.setBounds(629, 10, 85, 59);
+		JButton btnNewButton = new JButton("Buscar");
+		btnNewButton.setBounds(629, 10, 108, 59);
 		contentPane.add(btnNewButton);
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(40, 98, 135, 53);
+		comboBox.addItem("MARISQUERIA");
+		comboBox.addItem("MENU");
+		comboBox.addItem("PIZZERIA");
+		comboBox.addItem("CERVECERA");
 		contentPane.add(comboBox);
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setBounds(40, 176, 135, 53);
+		SpinnerNumberModel valoresSpinner = new SpinnerNumberModel(1, 1, 5, 1); //default, minimo, maximo, incremento
+		JSpinner spinner = new JSpinner(valoresSpinner);
+		spinner.setBounds(40, 237, 135, 53);
 		contentPane.add(spinner);
+		
+		JList list = new JList();
+		list.setBounds(234, 98, 502, 389);
+		contentPane.add(list);
 	}
 }

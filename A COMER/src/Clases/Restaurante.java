@@ -9,18 +9,22 @@ public class Restaurante extends Usuario{
 	//public Map<String, List<String>> carta;
 	public TipoRestaurante tipo;
 	public int valoracion;
+	public int apertura;
+	public int cierre;
 	
 	
 	public Restaurante() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Restaurante(String correo, String contrasenya, String nombre, String direccion, TipoRestaurante tipo, int valoracion) {
+	public Restaurante(String correo, String contrasenya, String nombre, String direccion, TipoRestaurante tipo, int valoracion, int apertura, int cierre) {
 		super(correo, contrasenya);
 		this.nombre = nombre;
 		this.direccion = direccion;
 		this.tipo = tipo;
 		this.valoracion = valoracion;
+		this.apertura = apertura;
+		this.cierre = cierre;
 	}
 	public String getNombre() {
 		return nombre;
@@ -46,6 +50,17 @@ public class Restaurante extends Usuario{
 	public void setValoracion(int valoracion) {
 		this.valoracion = valoracion;
 	}
-	
+	public int getApertura() {
+		return apertura;
+	}
+	public void setApertura(int apertura) {
+		this.apertura = apertura;
+	}
+	public int getCierre() {
+		return cierre;
+	}
+	public void setCierre(int cierre) {
+		this.cierre = cierre;
+	}
 	
 }
