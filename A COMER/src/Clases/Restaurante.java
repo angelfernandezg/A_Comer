@@ -5,6 +5,7 @@ import java.util.Map;
 public class Restaurante extends Usuario{
 
 	public String nombre;
+	public String localidad;
 	public String direccion;
 	//public Map<String, List<String>> carta;
 	public TipoRestaurante tipo;
@@ -17,7 +18,7 @@ public class Restaurante extends Usuario{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Restaurante(String correo, String contrasenya, String nombre, String direccion, TipoRestaurante tipo, int valoracion, int apertura, int cierre) {
+	public Restaurante(String correo, String contrasenya, String nombre, String localidad,String direccion, TipoRestaurante tipo, int valoracion, int apertura, int cierre) {
 		super(correo, contrasenya);
 		this.nombre = nombre;
 		this.direccion = direccion;
@@ -31,6 +32,12 @@ public class Restaurante extends Usuario{
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+	public String getLocalidad() {
+		return localidad;
+	}
+	public void setLocalidad(String localidad) {
+		this.localidad = localidad;
 	}
 	public String getDireccion() {
 		return direccion;
