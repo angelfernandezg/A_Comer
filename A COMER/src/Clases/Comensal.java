@@ -4,21 +4,24 @@ import java.util.List;
 
 public class Comensal extends Usuario{
 
-	public String nombre;
-	public String apellido;
+	public String apodo;
 	//public List<String> reservas;
 	
-	public Comensal(String correo, String contrasenya, String nombre, String apellido) {
+	public Comensal(String correo, String contrasenya, String apodo) {
 		super(correo, contrasenya);
-		this.nombre = nombre;
-		this.apellido = apellido;
+		this.apodo = apodo;
 	}
 
 	public Comensal() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	
-	
+
+	public String getApodo() {
+		return apodo;
+	}
+
+	public void setApodo(String apodo) {
+		this.apodo = apodo;
+	}
 }

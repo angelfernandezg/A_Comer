@@ -1,10 +1,17 @@
 package Ventanas;
 
 import java.awt.EventQueue;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Clases.Comensal;
+import Clases.Restaurante;
+
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTable;
@@ -12,6 +19,7 @@ import javax.swing.JButton;
 
 public class VentanaRestaurante2 extends JFrame {
 
+	private static Logger logger = Logger.getLogger("VentanaRestaurante2");
 	private JPanel contentPane;
 	private JTable table;
 
@@ -78,5 +86,14 @@ public class VentanaRestaurante2 extends JFrame {
 		JLabel lblNewLabel_4 = new JLabel("Valoracion");
 		lblNewLabel_4.setBounds(25, 230, 279, 40);
 		contentPane.add(lblNewLabel_4);
+	}
+	
+	public void Reservar() {
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter("resources/Reservas.txt"))) {
+			bw.write("Federico ha realizado una reserva para 4 personas a las 6:00");
+			//bw.write(comensal.getApodo() + "ha realizado una reserva para " + "X" + "a las :" + "");
+		} catch (Exception e) {
+			logger.warning(String.format("Error al escribir en el fichero: %s", e.getMessage()));
+		}
 	}
 }

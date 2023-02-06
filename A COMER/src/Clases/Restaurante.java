@@ -18,9 +18,10 @@ public class Restaurante extends Usuario{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Restaurante(String correo, String contrasenya, String nombre, String localidad,String direccion, TipoRestaurante tipo, int valoracion, int apertura, int cierre) {
+	public Restaurante(String correo, String contrasenya, String nombre, String localidad, String direccion, TipoRestaurante tipo, int valoracion, int apertura, int cierre) {
 		super(correo, contrasenya);
 		this.nombre = nombre;
+		this.localidad = localidad;
 		this.direccion = direccion;
 		this.tipo = tipo;
 		this.valoracion = valoracion;

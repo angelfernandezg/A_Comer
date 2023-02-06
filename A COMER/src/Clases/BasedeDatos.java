@@ -2,6 +2,7 @@ package Clases;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.logging.Logger;
 
@@ -12,7 +13,7 @@ public class BasedeDatos {
 	private static final String CONNECTION_STRING = "jdbc:sqlite:resources/A_Comer.db";
 	private static Connection con;
 	
-	public static void connectBD() {
+	public void connectBD() {
 		try {
 			Class.forName(DRIVER);
 			con = DriverManager.getConnection(CONNECTION_STRING); //preguntar 
@@ -22,7 +23,7 @@ public class BasedeDatos {
 		}
 	}
 	
-	public static void disconnectBD() {
+	public void disconnectBD() {
 		try {
 			con.close();
 			logger.info("Se ha cerrado la conexion");
@@ -49,6 +50,53 @@ public class BasedeDatos {
 //	}
 //	
 //	
+	public void pruebaFuncionaBD() {
+		String sql = "Select * from Comensal;";
+		try (Statement st = con.createStatement()) {
+			ResultSet rs = st.executeQuery(sql);
+			logger.info("Funciona");
+		} catch (Exception e) {
+			logger.warning(String.format("Error: %s", e.getMessage()));
+		}
+	}
 	
 	
+	public void cargarBD() {
+		String sql1 = "Select * from Comensal;";
+		String sql2 = "Select * from Restaurante";
+		String sql3 = "Select * from Valoracion";
+		String sql4 = "Select * from Respuesta";
+		try (Statement st = con.createStatement()) {
+			ResultSet rs1 = st.executeQuery(sql1);
+			ResultSet rs2 = st.executeQuery(sql2);
+			ResultSet rs3 = st.executeQuery(sql3);
+			ResultSet rs4 = st.executeQuery(sql4);
+			
+		while(rs1.next()) {
+			Comensal comensal = new Comensal(rs1.getString("Correo"),
+											rs1.getString("Contrasenya"),
+											rs1.getString("Apodo"));
+		}
+		while(rs2.next()) {
+			Restaurante restaurante = new Restaurante(rs2.getString("Correo"),
+													rs2.getString("Contrasenya"),
+													rs2.getString("Nombre"),
+													rs2.getString("Localidad"),
+													rs2.getString("Direccion"),
+													TipoRestaurante.valueOf(rs2.getString("Tipo")),
+													rs2.getInt("Valoracion"),
+													rs2.getInt("Apertura"),
+													rs2.getInt("Cierre"));
+		}
+		while(rs3.next()) {
+			
+		}
+		while(rs4.next()) {
+			
+		}
+		
+		} catch (Exception e) {
+			
+		}
+	}
 }
