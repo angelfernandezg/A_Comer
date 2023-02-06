@@ -58,16 +58,17 @@ public class VentanaBuscador2 extends JFrame {
 		contentPane.add(btnNewButton);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(40, 98, 135, 53);
-		comboBox.addItem("MARISQUERIA");
-		comboBox.addItem("MENU");
-		comboBox.addItem("PIZZERIA");
-		comboBox.addItem("CERVECERA");
+		comboBox.setBounds(40, 132, 135, 53);
+		comboBox.addItem("Cualquiera");
+		comboBox.addItem("Marisqueria");
+		comboBox.addItem("Menu");
+		comboBox.addItem("Pizzeria");
+		comboBox.addItem("Cervecera");
 		contentPane.add(comboBox);
 		
-		SpinnerNumberModel valoresSpinner = new SpinnerNumberModel(1, 1, 5, 1); //default, minimo, maximo, incremento
-		JSpinner spinner = new JSpinner(valoresSpinner);
-		spinner.setBounds(40, 237, 135, 53);
+		SpinnerNumberModel valoresSpinner = new SpinnerNumberModel(0, 0, 5, 1); //default, minimo, maximo, incremento
+		JSpinner spinner = new JSpinner(valoresSpinner);// 0 -> da igual
+		spinner.setBounds(40, 209, 135, 53);
 		contentPane.add(spinner);
 		
 		JList list = new JList();
