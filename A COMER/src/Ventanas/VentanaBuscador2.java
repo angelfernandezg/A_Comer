@@ -4,22 +4,39 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+import Clases.BasedeDatos;
+import Clases.Restaurante;
+import Clases.TipoRestaurante;
+
 import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.ComboBoxEditor;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JList;
+import javax.swing.JTable;
 
 public class VentanaBuscador2 extends JFrame {
 
+	private BasedeDatos bd = new BasedeDatos();
+	private Map<String, Restaurante> mapaRestaurantes;
 	private JPanel contentPane;
 	private JTextField textField;
 	private SpinnerNumberModel valoresSpinner;
+	private JSpinner spinner;
+	private JTable table;
+	private JComboBox comboTipos;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -57,22 +74,104 @@ public class VentanaBuscador2 extends JFrame {
 		btnNewButton.setBounds(629, 10, 108, 59);
 		contentPane.add(btnNewButton);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(40, 132, 135, 53);
-		comboBox.addItem("Cualquiera");
-		comboBox.addItem("Marisqueria");
-		comboBox.addItem("Menu");
-		comboBox.addItem("Pizzeria");
-		comboBox.addItem("Cervecera");
-		contentPane.add(comboBox);
+		comboTipos = new JComboBox();
+		comboTipos.setBounds(40, 132, 135, 53);
+		comboTipos.addItem("Cualquiera");
+		comboTipos.addItem("marisqueria");
+		comboTipos.addItem("menu");
+		comboTipos.addItem("pizzeria");
+		comboTipos.addItem("cervecera");
+		contentPane.add(comboTipos);
 		
-		SpinnerNumberModel valoresSpinner = new SpinnerNumberModel(0, 0, 5, 1); //default, minimo, maximo, incremento
-		JSpinner spinner = new JSpinner(valoresSpinner);// 0 -> da igual
+		valoresSpinner = new SpinnerNumberModel(0, 0, 5, 1); //default, minimo, maximo, incremento
+		spinner = new JSpinner(valoresSpinner);// 0 -> da igual
 		spinner.setBounds(40, 209, 135, 53);
 		contentPane.add(spinner);
 		
-		JList list = new JList();
-		list.setBounds(234, 98, 502, 389);
-		contentPane.add(list);
+		String[] columnas = {"Nombre", "Tipo", "Localidad", "Estrellas"};
+		DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
+	
+		table = new JTable(modelo);
+		table.setBounds(232, 113, 504, 289);
+		JScrollPane barra = new JScrollPane(table);
+		barra.setBounds(232, 113, 504, 289);
+		contentPane.add(barra);
+		
+		btnNewButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				buscador(modelo);
+			}
+		});
 	}
+	
+	public void buscador(DefaultTableModel modelo) {
+		String localidad = textField.getText();
+		String tipo = (String) comboTipos.getSelectedItem();
+		Integer estrellas = (Integer) spinner.getValue();
+		modelo.setRowCount(0); //borra las lineas que estaban en la tabla para sacar solo las nuevas
+		bd.connectBD();
+		mapaRestaurantes = bd.cargarRestaurantes();
+		bd.disconnectBD();
+		if (localidad.equals("") && tipo.equals("Cualquiera") && estrellas == 0) {
+			for (Restaurante restaurante : mapaRestaurantes.values()) {
+				modelo.addRow(new Object[] { restaurante.getNombre(), restaurante.getTipo(), restaurante.getLocalidad(), restaurante.getValoracion()});
+			}
+		} else if (!localidad.equals("") && tipo.equals("Cualquiera") && estrellas == 0){
+			for (Restaurante restaurante : mapaRestaurantes.values()) {
+				if (restaurante.getLocalidad().equals(localidad.toLowerCase())) {
+					modelo.addRow(new Object[] { restaurante.getNombre(), restaurante.getTipo(), restaurante.getLocalidad(), restaurante.getValoracion()});
+				}
+			}
+		} else if (localidad.equals("") && !tipo.equals("Cualquiera") && estrellas == 0) {
+			for (Restaurante restaurante : mapaRestaurantes.values()) {
+				if (restaurante.getTipo().toString().equals(tipo)) {
+					modelo.addRow(new Object[] { restaurante.getNombre(), restaurante.getTipo(), restaurante.getLocalidad(), restaurante.getValoracion()});
+				}
+			}
+		} else if (!localidad.equals("") && !tipo.equals("Cualquiera") && estrellas == 0) {
+			for (Restaurante restaurante : mapaRestaurantes.values()) {
+				if (restaurante.getLocalidad().equals(localidad.toLowerCase()) && restaurante.getTipo().toString().equals(tipo)) {
+					modelo.addRow(new Object[] { restaurante.getNombre(), restaurante.getTipo(), restaurante.getLocalidad(), restaurante.getValoracion()});
+				}
+			}
+		} else if (localidad.equals("") && tipo.equals("Cualquiera") && estrellas != 0) {
+			for (Restaurante restaurante : mapaRestaurantes.values()) {
+				if (restaurante.getValoracion() == estrellas) {
+					modelo.addRow(new Object[] { restaurante.getNombre(), restaurante.getTipo(), restaurante.getLocalidad(), restaurante.getValoracion()});
+				}
+			}
+		} else if (!localidad.equals("") && tipo.equals("Cualquiera") && estrellas != 0) {
+			for (Restaurante restaurante : mapaRestaurantes.values()) {
+				if (restaurante.getLocalidad().equals(localidad.toLowerCase()) && restaurante.getValoracion() == estrellas) {
+					modelo.addRow(new Object[] { restaurante.getNombre(), restaurante.getTipo(), restaurante.getLocalidad(), restaurante.getValoracion()});
+				}
+			}
+		} else if (localidad.equals("") && !tipo.equals("Cualquiera") && estrellas != 0) {
+			for (Restaurante restaurante : mapaRestaurantes.values()) {
+				if (restaurante.getTipo().toString().equals(tipo) && restaurante.getValoracion() == estrellas) {
+					modelo.addRow(new Object[] { restaurante.getNombre(), restaurante.getTipo(), restaurante.getLocalidad(), restaurante.getValoracion()});
+				}
+			}
+		} else if (!localidad.equals("") && !tipo.equals("Cualquiera") && estrellas != 0) {
+			for (Restaurante restaurante : mapaRestaurantes.values()) {
+				if (restaurante.getLocalidad().equals(localidad.toLowerCase()) && restaurante.getTipo().toString().equals(tipo) && restaurante.getValoracion() == estrellas) {
+					modelo.addRow(new Object[] { restaurante.getNombre(), restaurante.getTipo(), restaurante.getLocalidad(), restaurante.getValoracion()});
+				}
+			}
+		}
+	}
+	
+//	public void buscador(DefaultTableModel modelo) {
+//		modelo.setRowCount(0); //borra las lineas que estaban en la tabla para sacar solo las nuevas
+//		bd.connectBD();
+//		mapaRestaurantes = bd.cargarRestaurantes();
+//		bd.disconnectBD();
+//		for (Restaurante restaurante : mapaRestaurantes.values()) {
+//			modelo.addRow(new Object[] { restaurante.getNombre(), restaurante.getTipo(), restaurante.getLocalidad(), restaurante.getValoracion()});
+//		}
+//	}
+	
 }

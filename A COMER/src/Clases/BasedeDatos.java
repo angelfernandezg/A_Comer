@@ -4,6 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class BasedeDatos {
@@ -61,42 +65,89 @@ public class BasedeDatos {
 	}
 	
 	
-	public void cargarBD() {
+	public Map<String, Comensal> cargarComensales() {
+		
+		Map<String, Comensal> mapaComensales = new HashMap<>();
 		String sql1 = "Select * from Comensal;";
-		String sql2 = "Select * from Restaurante";
-		String sql3 = "Select * from Valoracion";
-		String sql4 = "Select * from Respuesta";
 		try (Statement st = con.createStatement()) {
 			ResultSet rs1 = st.executeQuery(sql1);
-			ResultSet rs2 = st.executeQuery(sql2);
-			ResultSet rs3 = st.executeQuery(sql3);
-			ResultSet rs4 = st.executeQuery(sql4);
-			
-		while(rs1.next()) {
-			Comensal comensal = new Comensal(rs1.getString("Correo"),
-											rs1.getString("Contrasenya"),
-											rs1.getString("Apodo"));
-		}
-		while(rs2.next()) {
-			Restaurante restaurante = new Restaurante(rs2.getString("Correo"),
-													rs2.getString("Contrasenya"),
-													rs2.getString("Nombre"),
-													rs2.getString("Localidad"),
-													rs2.getString("Direccion"),
-													TipoRestaurante.valueOf(rs2.getString("Tipo")),
-													rs2.getInt("Valoracion"),
-													rs2.getInt("Apertura"),
-													rs2.getInt("Cierre"));
-		}
-		while(rs3.next()) {
-			
-		}
-		while(rs4.next()) {
-			
-		}
-		
+			while(rs1.next()) {
+				Comensal comensal = new Comensal(rs1.getString("Correo"),
+												rs1.getString("Contraseña"),
+												rs1.getString("Apodo"));
+				mapaComensales.put(comensal.getApodo(), comensal);
+			}
+			logger.info("Se han cargado correctamente los Comensales de la BD");
 		} catch (Exception e) {
-			
+			logger.warning(String.format("Error de BD al cargar los Comensales: %s", e.getMessage()));
 		}
+		return mapaComensales;
+	}
+	
+	public Map<String, Restaurante> cargarRestaurantes() {
+		Map<String, Restaurante> mapaRestaurantes = new HashMap<>();
+		String sql2 = "Select * from Restaurante";
+		try (Statement st = con.createStatement()) {
+			ResultSet rs2 = st.executeQuery(sql2);
+			while(rs2.next()) {
+				Restaurante restaurante = new Restaurante(rs2.getString("Correo"),
+														rs2.getString("Contraseña"),
+														rs2.getString("Nombre"),
+														rs2.getString("Localidad"),
+														rs2.getString("Direccion"),
+														TipoRestaurante.valueOf(rs2.getString("Tipo")),
+														rs2.getInt("Valoracion"),
+														rs2.getInt("Apertura"),
+														rs2.getInt("Cierre"));
+				mapaRestaurantes.put(restaurante.getNombre(), restaurante);
+			}
+			logger.info("Se han cargado correctamente los Restaurantes de la BD");
+		} catch (Exception e) {
+			logger.warning(String.format("Error de BD al cargar los Restaurantes: %s", e.getMessage()));
+		}
+		return mapaRestaurantes;
+	}
+	
+	public List<Valoracion> cargarValoraciones() {
+		Map<String, Comensal> mapaComensales = cargarComensales();
+		Map<String, Restaurante> mapaRestaurantes = cargarRestaurantes();
+		List<Valoracion> listaValoraciones = new ArrayList<>();
+		String sql3 = "Select * from Valoracion";
+		try(Statement st = con.createStatement()) {
+			ResultSet rs3 = st.executeQuery(sql3);
+			while(rs3.next()) {
+				Valoracion valoracion = new Valoracion(mapaComensales.get(rs3.getString("Comensal")),
+														mapaRestaurantes.get(rs3.getString("Restaurante")),
+														rs3.getString("Fecha"),
+														rs3.getInt("Estrellas"),
+														rs3.getString("Analisis"));
+				listaValoraciones.add(valoracion);
+			}
+			logger.info("Se han cargado correctamente las Valoraciones de la BD");
+		} catch (Exception e) {
+			logger.warning(String.format("Error de BD al cargar las Valoraciones: %s", e.getMessage()));
+		}
+		return listaValoraciones;
+	}
+	
+	public List<Respuesta> cargarRespuestas() {
+		Map<String, Comensal> mapaComensales = cargarComensales();
+		Map<String, Restaurante> mapaRestaurantes = cargarRestaurantes();
+		List<Respuesta> listaRespuestas = new ArrayList<>();
+		String sql4 = "Select * from Respuesta";
+		try (Statement st = con.createStatement()) {
+			ResultSet rs4 = st.executeQuery(sql4);
+			while(rs4.next()) {
+				Respuesta respuesta = new Respuesta(mapaRestaurantes.get(rs4.getString("Restaurante")),
+													mapaComensales.get(rs4.getString("Comensal")),
+													rs4.getString("Fecha"),
+													rs4.getString("Respuesta"));
+				listaRespuestas.add(respuesta);
+			}
+			logger.info("Se han cargado correctamente las Respuestas de la BD");
+		} catch (Exception e) {
+			logger.warning(String.format("Error de BD al cargar las Respuestas: %s", e.getMessage()));
+		}
+		return listaRespuestas;
 	}
 }

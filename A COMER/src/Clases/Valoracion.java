@@ -1,11 +1,10 @@
 package Clases;
 public class Valoracion {
 
-	public String codigo;
-	public Usuario usuario;
+	public Comensal comensal;
 	public Restaurante restaurante;
+	public String fecha;
 	public int estrellas;
-	public long fecha;
 	public String analisis;
 
 	
@@ -13,25 +12,33 @@ public class Valoracion {
 	public Valoracion() {
 		super();
 	}
-	public Valoracion(String codigo, Usuario usuario, Restaurante restaurante, int estrellas, String analisis) {
+	public Valoracion(Comensal comesal, Restaurante restaurante, String fecha, int estrellas, String analisis) {
 		super();
-		this.codigo = codigo;
-		this.usuario = usuario;
+		this.comensal = comensal;
 		this.restaurante = restaurante;
+		this.fecha = fecha;
 		this.estrellas = estrellas;
 		this.analisis = analisis;
 	}
-	public Usuario getUsuario() {
-		return usuario;
+	
+	public Comensal getComensal() {
+		return comensal;
 	}
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setComensal(Comensal comensal) {
+		this.comensal = comensal;
 	}
 	public Restaurante getRestaurante() {
 		return restaurante;
 	}
 	public void setRestaurante(Restaurante restaurante) {
 		this.restaurante = restaurante;
+	}
+	
+	public String getFecha() {
+		return fecha;
+	}
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
 	}
 	public int getEstrellas() {
 		return estrellas;
