@@ -1,6 +1,7 @@
 package Ventanas;
 
 import java.awt.EventQueue;
+import java.awt.Point;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -18,6 +19,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.ComboBoxEditor;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.event.ActionEvent;
@@ -105,6 +108,54 @@ public class VentanaBuscador2 extends JFrame {
 				buscador(modelo);
 			}
 		});
+		table.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				JTable table = (JTable) e.getSource();
+				Point p = e.getPoint();
+				int row = table.rowAtPoint(p);
+				Restaurante seleccionado = null;
+				if (e.getClickCount() == 2) {
+					//Obtener el restaurante seleccionado
+					String nombre = (String) table.getValueAt(row, 0);
+					for (Restaurante restaurante : mapaRestaurantes.values()) {
+						if (restaurante.getNombre().equals(nombre)) {
+							seleccionado = restaurante;
+						}
+					}
+					//Abrir una nueva ventana del restaurante
+					VentanaRestaurante2 verRestaurante = new VentanaRestaurante2(seleccionado);
+					verRestaurante.setVisible(true);
+				}
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 	}
 	
 	public void buscador(DefaultTableModel modelo) {

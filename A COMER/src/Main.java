@@ -21,9 +21,6 @@ public class Main {
 		List<Respuesta> comprobarRespuestas = bd.cargarRespuestas();
 		bd.disconnectBD();
 		
-		VentanaRestaurante2 vr2 = new VentanaRestaurante2();
-		vr2.Reservar();
-		
 		System.out.println(comprobarComensales.size());
 		for (Comensal comensal : comprobarComensales.values()) {
 			System.out.println(comensal.getApodo());
