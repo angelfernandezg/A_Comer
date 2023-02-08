@@ -150,4 +150,39 @@ public class BasedeDatos {
 		}
 		return listaRespuestas;
 	}
+	
+	public Comensal iniciarSesionComensal(String correo, String contrasenya) {
+		Comensal resultado = new Comensal();
+		try (Statement st = con.createStatement()) {
+			ResultSet rs = st.executeQuery("Select * from Comensal where Correo = '" + correo + "' and Contraseña = '" + contrasenya + "';");
+			resultado = new Comensal(rs.getString("Correo"),
+											rs.getString("Contraseña"),
+											rs.getString("Apodo"));
+			logger.info("iniciarSesionComensal se ha ejercutado correctamente");
+		} catch (Exception e) {
+			logger.warning(String.format("Error al iniciarSesionComensal: %s", e.getMessage()));
+		}
+		return resultado;
+	}
+	
+	public Restaurante iniciarSesionRestaurante(String correo, String contrasenya) {
+		Restaurante resultado = new Restaurante();
+		try (Statement st = con.createStatement()) {
+			ResultSet rs = st.executeQuery("Select * from Restaurante where Correo = '" + correo + "' and Contraseña = '" + contrasenya + "';");
+			resultado = new Restaurante(rs.getString("Correo"),
+													rs.getString("Contraseña"),
+													rs.getString("Nombre"),
+													rs.getString("Localidad"),
+													rs.getString("Direccion"),
+													TipoRestaurante.valueOf(rs.getString("Tipo")),
+													rs.getInt("Valoracion"),
+													rs.getInt("Apertura"),
+													rs.getInt("Cierre"));
+			logger.info("iniciarSesionRestaurante se ha ejercutado correctamente");
+		} catch (Exception e) {
+			logger.warning(String.format("Error al iniciarSesionRestaurante: %s", e.getMessage()));
+		}
+		
+		return resultado;
+	}
 }

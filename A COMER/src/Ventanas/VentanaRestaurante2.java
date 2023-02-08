@@ -33,7 +33,7 @@ public class VentanaRestaurante2 extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaRestaurante2 frame = new VentanaRestaurante2(new Restaurante("correoPrueba", "contraseñaPrueba", "nombrePreba", "albacete", "calle kalea", TipoRestaurante.pizzeria, 1, 12, 17));
+					VentanaRestaurante2 frame = new VentanaRestaurante2(new Restaurante("correoPrueba", "contraseñaPrueba", "nombrePreba", "albacete", "calle kalea", TipoRestaurante.pizzeria, 1, 12, 17), false);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -45,7 +45,7 @@ public class VentanaRestaurante2 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaRestaurante2(Restaurante restaurante) {
+	public VentanaRestaurante2(Restaurante restaurante, boolean puedeReservar) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 498, 445);
 		contentPane = new JPanel();
