@@ -46,11 +46,11 @@ public class VentanaValoracion extends JFrame {
 		
 		SpinnerNumberModel valoresSpinner = new SpinnerNumberModel(1, 1, 5, 1);
 		JSpinner spinner = new JSpinner(valoresSpinner);
-		spinner.setBounds(201, 26, 130, 57);
+		spinner.setBounds(221, 26, 130, 57);
 		contentPane.add(spinner);
 		
 		textField = new JTextField();
-		textField.setBounds(201, 143, 363, 154);
+		textField.setBounds(200, 123, 363, 154);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
@@ -63,7 +63,7 @@ public class VentanaValoracion extends JFrame {
 		contentPane.add(lblNewLabel_1);
 		
 		JButton btnNewButton = new JButton("Confirmar");
-		btnNewButton.setBounds(449, 26, 115, 57);
+		btnNewButton.setBounds(413, 26, 151, 57);
 		contentPane.add(btnNewButton);
 	}
 }
