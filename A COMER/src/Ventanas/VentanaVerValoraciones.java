@@ -1,7 +1,7 @@
 package Ventanas;
 
 import java.awt.EventQueue;
-import java.util.List;
+import java.awt.Point;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,9 +10,27 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import Clases.BasedeDatos;
+import Clases.Comensal;
 import Clases.Respuesta;
+import Clases.Restaurante;
+import Clases.TipoRestaurante;
 import Clases.Valoracion;
 
+import javax.swing.JTextField;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.ComboBoxEditor;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
+import javax.swing.JSpinner;
+import javax.swing.JList;
 import javax.swing.JTable;
 
 public class VentanaVerValoraciones extends JFrame {
@@ -43,23 +61,24 @@ public class VentanaVerValoraciones extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaVerValoraciones() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 644, 356);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
 		
 		String[] columnas = {"De", "A", "Fecha", "Estrellas", "Analisis"};
 		DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
 		
 		table = new JTable(modelo);
+		table.setBounds(89, 10, 452, 426);
 		JScrollPane barra = new JScrollPane(table);
-		barra.setBounds(232, 113, 400, 250);
+		barra.setBounds(89, 10, 452, 426);
 		contentPane.add(barra);
 		
 		verValoracionesYRespuestas(modelo);
-		this.setVisible(true);
 	}
 	
 	public void verValoracionesYRespuestas(DefaultTableModel modelo) {

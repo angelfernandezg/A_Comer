@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import Clases.BasedeDatos;
+import Clases.Comensal;
 import Clases.Restaurante;
 import Clases.TipoRestaurante;
 
@@ -47,7 +48,7 @@ public class VentanaBuscador2 extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaBuscador2 frame = new VentanaBuscador2();
+					VentanaBuscador2 frame = new VentanaBuscador2(new Comensal("correoPurebaComensal", "contraseñaPruebaComensal", "apodoPrueba"));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -58,9 +59,10 @@ public class VentanaBuscador2 extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param usuario 
 	 */
-	public VentanaBuscador2() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public VentanaBuscador2(Comensal usuario) {
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 811, 586);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

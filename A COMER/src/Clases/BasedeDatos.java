@@ -72,10 +72,9 @@ public class BasedeDatos {
 		try (Statement st = con.createStatement()) {
 			ResultSet rs1 = st.executeQuery(sql1);
 			while(rs1.next()) {
-				Comensal comensal = new Comensal(rs1.getString("Correo"),
-												rs1.getString("Contraseña"),
-												rs1.getString("Apodo"));
-				mapaComensales.put(comensal.getApodo(), comensal);
+				mapaComensales.put(rs1.getString("Apodo"), new Comensal(rs1.getString("Correo"),
+														rs1.getString("Contraseña"),
+														rs1.getString("Apodo")));
 			}
 			logger.info("Se han cargado correctamente los Comensales de la BD");
 		} catch (Exception e) {
@@ -90,16 +89,15 @@ public class BasedeDatos {
 		try (Statement st = con.createStatement()) {
 			ResultSet rs2 = st.executeQuery(sql2);
 			while(rs2.next()) {
-				Restaurante restaurante = new Restaurante(rs2.getString("Correo"),
-														rs2.getString("Contraseña"),
-														rs2.getString("Nombre"),
-														rs2.getString("Localidad"),
-														rs2.getString("Direccion"),
-														TipoRestaurante.valueOf(rs2.getString("Tipo")),
-														rs2.getInt("Valoracion"),
-														rs2.getInt("Apertura"),
-														rs2.getInt("Cierre"));
-				mapaRestaurantes.put(restaurante.getNombre(), restaurante);
+				mapaRestaurantes.put(rs2.getString("Nombre"), new Restaurante(rs2.getString("Correo"),
+																			rs2.getString("Contraseña"),
+																			rs2.getString("Nombre"),
+																			rs2.getString("Localidad"),
+																			rs2.getString("Direccion"),
+																			TipoRestaurante.valueOf(rs2.getString("Tipo")),
+																			rs2.getInt("Valoracion"),
+																			rs2.getInt("Apertura"),
+																			rs2.getInt("Cierre")));
 			}
 			logger.info("Se han cargado correctamente los Restaurantes de la BD");
 		} catch (Exception e) {
@@ -116,12 +114,12 @@ public class BasedeDatos {
 		try(Statement st = con.createStatement()) {
 			ResultSet rs3 = st.executeQuery(sql3);
 			while(rs3.next()) {
-				Valoracion valoracion = new Valoracion(mapaComensales.get(rs3.getString("Comensal")),
-														mapaRestaurantes.get(rs3.getString("Restaurante")),
-														rs3.getString("Fecha"),
-														rs3.getInt("Estrellas"),
-														rs3.getString("Analisis"));
-				listaValoraciones.add(valoracion);
+				listaValoraciones.add(new Valoracion(mapaComensales.get(rs3.getString("Comensal")),
+						mapaRestaurantes.get(rs3.getString("Restaurante")),
+						rs3.getString("Fecha"),
+						rs3.getInt("Estrellas"),
+						rs3.getString("Analisis")));
+				System.out.println(mapaComensales.get(rs3.getString("Comensal")).getApodo() + mapaRestaurantes.get(rs3.getString("Restaurante")).getNombre() + rs3.getString("Fecha") + rs3.getInt("Estrellas") + rs3.getString("Analisis"));
 			}
 			logger.info("Se han cargado correctamente las Valoraciones de la BD");
 		} catch (Exception e) {
@@ -138,11 +136,10 @@ public class BasedeDatos {
 		try (Statement st = con.createStatement()) {
 			ResultSet rs4 = st.executeQuery(sql4);
 			while(rs4.next()) {
-				Respuesta respuesta = new Respuesta(mapaRestaurantes.get(rs4.getString("Restaurante")),
-													mapaComensales.get(rs4.getString("Comensal")),
-													rs4.getString("Fecha"),
-													rs4.getString("Respuesta"));
-				listaRespuestas.add(respuesta);
+				listaRespuestas.add(new Respuesta(mapaRestaurantes.get(rs4.getString("Restaurante")),
+						mapaComensales.get(rs4.getString("Comensal")),
+						rs4.getString("Fecha"),
+						rs4.getString("Respuesta")));
 			}
 			logger.info("Se han cargado correctamente las Respuestas de la BD");
 		} catch (Exception e) {
@@ -184,5 +181,16 @@ public class BasedeDatos {
 		}
 		
 		return resultado;
+	}
+	
+	public void guardarValoracionBD(String comensal, String restaurante, String fecha, int estrellas, String reseña) {
+		String sql = "Insert into Valoracion values ('%s', '%s', '%s', '%d', '%s')";
+		try (Statement st = con.createStatement()) {
+			st.executeUpdate(String.format(sql, comensal, restaurante, fecha, estrellas, reseña));
+			logger.info("Se ha añadido correctamente a la tabla Valoracion de la BD");
+			
+		} catch (Exception e) {
+			logger.warning(String.format("Error de BD al añadir a la tabla Valoracion: %s", e.getMessage()));
+		}
 	}
 }

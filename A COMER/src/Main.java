@@ -7,6 +7,7 @@ import Clases.Respuesta;
 import Clases.Restaurante;
 import Clases.Valoracion;
 import Ventanas.VentanaRestaurante2;
+import Ventanas.VentanaVerValoraciones;
 
 public class Main {
 
@@ -28,6 +29,8 @@ public class Main {
 		System.out.println(comprobarRestaurantes);
 		System.out.println(comprobarValoraciones);
 		System.out.println(comprobarRespuestas);
+		VentanaVerValoraciones frame = new VentanaVerValoraciones();
+		frame.setVisible(true);
 	}
 
 }

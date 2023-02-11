@@ -96,16 +96,26 @@ public class VentanaInicio2 extends JFrame {
 				// TODO Auto-generated method stub
 				if (comboBox.getSelectedItem().equals("Comensal")) {
 					bd.connectBD();
-					Comensal usuario = bd.iniciarSesionComensal(textField.getText(), textField_1.getText()); //al final que me devuelva el usuario no me sirve para nada, pensaba que lo iba a nevesitar pero no
+					Comensal usuario = bd.iniciarSesionComensal(textField.getText(), textField_1.getText()); 
 					bd.disconnectBD();
-					VentanaBuscador2 buscador = new VentanaBuscador2();
-					buscador.setVisible(true);
+					if (usuario.getApodo() != null) {
+						VentanaBuscador2 buscador = new VentanaBuscador2(usuario);
+						buscador.setVisible(true);
+					} else {
+						VentanaUsuarioOContraseñaIncorrecto error = new VentanaUsuarioOContraseñaIncorrecto();
+						error.setVisible(true);
+					}
 				} else {
 					bd.connectBD();
 					Restaurante usuario = bd.iniciarSesionRestaurante(textField.getText(), textField_1.getText());
 					bd.disconnectBD();
-					VentanaRestaurante2 verRestaurante = new VentanaRestaurante2(usuario, true, false);
-					verRestaurante.setVisible(true);
+					if (usuario.getNombre() != null) {
+						VentanaRestaurante2 verRestaurante = new VentanaRestaurante2(usuario, true, false);
+						verRestaurante.setVisible(true);
+					} else {
+						VentanaUsuarioOContraseñaIncorrecto error = new VentanaUsuarioOContraseñaIncorrecto();
+						error.setVisible(true);
+					}
 				}
 			}
 		});

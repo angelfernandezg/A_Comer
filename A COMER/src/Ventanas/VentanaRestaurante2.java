@@ -46,7 +46,7 @@ public class VentanaRestaurante2 extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaRestaurante2(Restaurante restaurante, boolean puedeResponder, boolean puedeReservar) {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 498, 445);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -73,6 +73,8 @@ public class VentanaRestaurante2 extends JFrame {
 		JButton btnNewButton_3 = new JButton("Ver Valoraciones");
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				VentanaVerValoraciones frame = new VentanaVerValoraciones();
+				frame.setVisible(true);
 			}
 		});
 		btnNewButton_3.setBounds(25, 294, 218, 45);
