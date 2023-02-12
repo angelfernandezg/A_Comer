@@ -235,4 +235,13 @@ public class BasedeDatos {
 			logger.warning(String.format("Error de BD al añadir a la tabla Valoracion: %s", e.getMessage()));
 		}
 	}
+	public void guardarRespuestaBD(String restaurante, String comensal, String fecha, String reseña) {
+		String sql = "Insert into Respuesta values('%s', '%s', '%s', '%s')";
+		try (Statement st = con.createStatement()) {
+			st.executeUpdate(String.format(sql, restaurante, comensal, fecha, reseña));
+			logger.info("Se ha añadido correctamente a la tabla Respuesta de la BD");
+		} catch (Exception e) {
+			logger.warning(String.format("Error de BD al añadir a la tabla Respuesta", e.getMessage()));
+		}
+	}
 }

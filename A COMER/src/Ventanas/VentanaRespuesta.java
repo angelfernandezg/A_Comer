@@ -10,23 +10,20 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Clases.BasedeDatos;
-import Clases.Comensal;
 import Clases.Restaurante;
 import Clases.TipoRestaurante;
 
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.JButton;
 
-public class VentanaValoracion extends JFrame {
+public class VentanaRespuesta extends JFrame {
 
-	private Calendar cal = Calendar.getInstance();
 	private BasedeDatos bd = new BasedeDatos();
+	private Calendar cal = Calendar.getInstance();
 	private JPanel contentPane;
 	private JTextField textField;
-	private JSpinner spinner;
+	private JTextField textField_1;
 
 	/**
 	 * Launch the application.
@@ -35,7 +32,7 @@ public class VentanaValoracion extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaValoracion frame = new VentanaValoracion(new Comensal("correoPurebaComensal", "contraseñaPruebaComensal", "apodoPrueba"),new Restaurante("correoPrueba", "contraseñaPrueba", "nombrePreba", "albacete", "calle kalea", TipoRestaurante.pizzeria, 1, 12, 17));
+					VentanaRespuesta frame = new VentanaRespuesta(new Restaurante("correoPrueba", "contraseñaPrueba", "nombrePreba", "albacete", "calle kalea", TipoRestaurante.pizzeria, 1, 12, 17));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,49 +44,49 @@ public class VentanaValoracion extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaValoracion(Comensal comensal, Restaurante restaurante) {
+	public VentanaRespuesta(Restaurante restaurante) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 622, 363);
+		setBounds(100, 100, 333, 286);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		SpinnerNumberModel valoresSpinner = new SpinnerNumberModel(1, 1, 5, 1);
-		spinner = new JSpinner(valoresSpinner);
-		spinner.setBounds(221, 26, 130, 57);
-		contentPane.add(spinner);
+		JLabel lblNewLabel = new JLabel("Usuario dirigido");
+		lblNewLabel.setBounds(27, 33, 85, 33);
+		contentPane.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("Respuesta");
+		lblNewLabel_1.setBounds(27, 113, 85, 33);
+		contentPane.add(lblNewLabel_1);
 		
 		textField = new JTextField();
-		textField.setBounds(200, 123, 363, 154);
+		textField.setBounds(131, 33, 96, 33);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
-		JLabel lblNewLabel = new JLabel("Estrellas:");
-		lblNewLabel.setBounds(31, 26, 130, 57);
-		contentPane.add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("Reseña:");
-		lblNewLabel_1.setBounds(31, 143, 130, 57);
-		contentPane.add(lblNewLabel_1);
+		textField_1 = new JTextField();
+		textField_1.setBounds(131, 113, 161, 96);
+		contentPane.add(textField_1);
+		textField_1.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Aceptar");
-		btnNewButton.setBounds(413, 26, 151, 57);
+		btnNewButton.setBounds(27, 188, 85, 21);
 		contentPane.add(btnNewButton);
 		btnNewButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				guardarValoracion(comensal, restaurante);
+				guardarRespuesta(restaurante);
 			}
 		});
 	}
 	
-	public void guardarValoracion(Comensal comensal, Restaurante restaurante) {
-		String reseña = textField.getText();
-		Integer estrellas = (Integer) spinner.getValue();
+	public void guardarRespuesta(Restaurante restaurante) {
+		String comensal = textField.getText();
+		String respuesta = textField_1.getText();
 		String year = String.valueOf(cal.get(Calendar.YEAR));
 		String month = String.valueOf(cal.get(Calendar.MONTH) + 1);
 		if (month.length() == 1) {
@@ -98,7 +95,7 @@ public class VentanaValoracion extends JFrame {
 		String day = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
 		String fecha = year + "-" + month + "-" + day;
 		bd.connectBD();
-		bd.guardarValoracionBD(comensal.getApodo(), restaurante.getNombre(), fecha, estrellas, reseña);
+		bd.guardarRespuestaBD(comensal, restaurante.getNombre(), fecha, respuesta);
 		bd.disconnectBD();
 	}
 }

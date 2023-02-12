@@ -90,6 +90,16 @@ public class VentanaRestaurante2 extends JFrame {
 		JButton btnNewButton_2 = new JButton("Responder");
 		btnNewButton_2.setBounds(253, 349, 212, 45);
 		contentPane.add(btnNewButton_2);
+		btnNewButton_2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				VentanaRespuesta vrespuesta = new VentanaRespuesta(restaurante);
+				vrespuesta.setVisible(true);
+			}
+		});
+		
 		
 		JButton btnNewButton_3 = new JButton("Ver Valoraciones");
 		btnNewButton_3.addActionListener(new ActionListener() {
