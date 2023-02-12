@@ -1,5 +1,7 @@
 package Ventanas;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Point;
 
@@ -7,7 +9,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 import Clases.BasedeDatos;
 import Clases.Comensal;
@@ -48,7 +52,7 @@ public class VentanaVerValoraciones extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaVerValoraciones frame = new VentanaVerValoraciones();
+					VentanaVerValoraciones frame = new VentanaVerValoraciones(new Restaurante("correoPrueba", "contraseñaPrueba", "nombrePreba", "albacete", "calle kalea", TipoRestaurante.pizzeria, 1, 12, 17));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -60,7 +64,7 @@ public class VentanaVerValoraciones extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaVerValoraciones() {
+	public VentanaVerValoraciones(Restaurante restaurante) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 644, 356);
 		contentPane = new JPanel();
@@ -78,18 +82,50 @@ public class VentanaVerValoraciones extends JFrame {
 		barra.setBounds(89, 10, 452, 426);
 		contentPane.add(barra);
 		
-		verValoracionesYRespuestas(modelo);
+		verValoracionesYRespuestas(modelo, restaurante);
+		
+		table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+			
+			public Component getTableCellRedererComponent(TableCellRenderer renderer, int row, int column) {
+			      Component component = getTableCellRedererComponent(renderer, row, column);
+			      int value = (int) table.getValueAt(row, 4); 
+			      if (value <= 2) {
+			         component.setBackground(Color.RED);
+			      } else if (value <= 4) {
+			         component.setBackground(Color.GREEN);
+			      } else {
+			         component.setBackground(Color.YELLOW);
+			      }
+			      return component;
+			   }
+		});
 	}
 	
-	public void verValoracionesYRespuestas(DefaultTableModel modelo) {
+	public void verValoracionesYRespuestas(DefaultTableModel modelo, Restaurante restaurante) {
 		bd.connectBD();
 		listaValoraciones = bd.cargarValoraciones();
 		listaRespuestas = bd.cargarRespuestas();
 		bd.disconnectBD();
 		modelo.setRowCount(0);
+//		for (Valoracion valoracion : listaValoraciones) {
+//			if (valoracion.getRestaurante().equals(restaurante)) {
+//				modelo.addRow(new String[] { valoracion.getComensal().getApodo(), valoracion.getRestaurante().getNombre(), valoracion.getFecha(), String.valueOf(valoracion.getEstrellas()), valoracion.getAnalisis()});
+//			}
+//		}
+//		for (Respuesta respuesta : listaRespuestas) {
+//			if (respuesta.getRestaurante().equals(restaurante)) {
+//				modelo.addRow(new String[] { respuesta.getRestaurante().getNombre(), respuesta.getComensal().getApodo(), respuesta.getFecha(), "-", respuesta.getRespuesta()});
+//			}
+//		}
 		for (Valoracion valoracion : listaValoraciones) {
+			//System.out.println(valoracion.getComensal());
 			modelo.addRow(new Object[] { valoracion.getComensal(), valoracion.getRestaurante(), valoracion.getFecha(), String.valueOf(valoracion.getEstrellas()), valoracion.getAnalisis()});
 		}
+		for (Respuesta respuesta : listaRespuestas) {
+			//System.out.println(respuesta.getRestaurante());
+			modelo.addRow(new Object[] { respuesta.getRestaurante(), respuesta.getComensal(), respuesta.getFecha(), "-", respuesta.getRespuesta()});
+		}
+		
 	}
 
 }

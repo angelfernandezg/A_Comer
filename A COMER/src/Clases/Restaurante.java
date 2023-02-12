@@ -70,5 +70,9 @@ public class Restaurante extends Usuario{
 	public void setCierre(int cierre) {
 		this.cierre = cierre;
 	}
+	public static Restaurante valueOf(String string) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

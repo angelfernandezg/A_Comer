@@ -24,4 +24,9 @@ public class Comensal extends Usuario{
 	public void setApodo(String apodo) {
 		this.apodo = apodo;
 	}
+
+	public static Comensal valueOf(String string) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

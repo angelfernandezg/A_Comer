@@ -29,8 +29,8 @@ public class Main {
 		System.out.println(comprobarRestaurantes);
 		System.out.println(comprobarValoraciones);
 		System.out.println(comprobarRespuestas);
-		VentanaVerValoraciones frame = new VentanaVerValoraciones();
-		frame.setVisible(true);
+		//VentanaVerValoraciones frame = new VentanaVerValoraciones();
+		//frame.setVisible(true);
 	}
 
 }

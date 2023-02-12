@@ -134,7 +134,7 @@ public class VentanaBuscador2 extends JFrame {
 						}
 					}
 					//Abrir una nueva ventana del restaurante
-					VentanaRestaurante2 verRestaurante = new VentanaRestaurante2(seleccionado, false, true);
+					VentanaRestaurante2 verRestaurante = new VentanaRestaurante2(usuario, seleccionado, false, true);
 					verRestaurante.setVisible(true);
 				}
 			}

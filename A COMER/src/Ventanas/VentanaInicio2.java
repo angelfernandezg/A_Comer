@@ -110,7 +110,7 @@ public class VentanaInicio2 extends JFrame {
 					Restaurante usuario = bd.iniciarSesionRestaurante(textField.getText(), textField_1.getText());
 					bd.disconnectBD();
 					if (usuario.getNombre() != null) {
-						VentanaRestaurante2 verRestaurante = new VentanaRestaurante2(usuario, true, false);
+						VentanaRestaurante2 verRestaurante = new VentanaRestaurante2(null, usuario, true, false);
 						verRestaurante.setVisible(true);
 					} else {
 						VentanaUsuarioOContraseñaIncorrecto error = new VentanaUsuarioOContraseñaIncorrecto();

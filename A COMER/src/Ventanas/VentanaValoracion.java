@@ -1,6 +1,8 @@
 package Ventanas;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Calendar;
 
 import javax.swing.JFrame;
@@ -33,7 +35,7 @@ public class VentanaValoracion extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaValoracion frame = new VentanaValoracion(new Restaurante("correoPrueba", "contraseñaPrueba", "nombrePreba", "albacete", "calle kalea", TipoRestaurante.pizzeria, 1, 12, 17));
+					VentanaValoracion frame = new VentanaValoracion(new Comensal("correoPurebaComensal", "contraseñaPruebaComensal", "apodoPrueba"),new Restaurante("correoPrueba", "contraseñaPrueba", "nombrePreba", "albacete", "calle kalea", TipoRestaurante.pizzeria, 1, 12, 17));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -45,7 +47,7 @@ public class VentanaValoracion extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaValoracion(Restaurante restaurante) {
+	public VentanaValoracion(Comensal comensal, Restaurante restaurante) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 622, 363);
 		contentPane = new JPanel();
@@ -75,6 +77,14 @@ public class VentanaValoracion extends JFrame {
 		JButton btnNewButton = new JButton("Confirmar");
 		btnNewButton.setBounds(413, 26, 151, 57);
 		contentPane.add(btnNewButton);
+		btnNewButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				guardarValoracion(comensal, restaurante);
+			}
+		});
 	}
 	
 	public void guardarValoracion(Comensal comensal, Restaurante restaurante) {
@@ -87,6 +97,8 @@ public class VentanaValoracion extends JFrame {
 		}
 		String day = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
 		String fecha = year + "-" + month + "-" + day;
+		bd.connectBD();
 		bd.guardarValoracionBD(comensal.getApodo(), restaurante.getNombre(), fecha, estrellas, reseña);
+		bd.disconnectBD();
 	}
 }

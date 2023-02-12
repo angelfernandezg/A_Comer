@@ -33,7 +33,7 @@ public class VentanaRestaurante2 extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaRestaurante2 frame = new VentanaRestaurante2(new Restaurante("correoPrueba", "contraseñaPrueba", "nombrePreba", "albacete", "calle kalea", TipoRestaurante.pizzeria, 1, 12, 17), false, true);
+					VentanaRestaurante2 frame = new VentanaRestaurante2(new Comensal("correoPurebaComensal", "contraseñaPruebaComensal", "apodoPrueba"),new Restaurante("correoPrueba", "contraseñaPrueba", "nombrePreba", "albacete", "calle kalea", TipoRestaurante.pizzeria, 1, 12, 17), false, true);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -45,7 +45,7 @@ public class VentanaRestaurante2 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaRestaurante2(Restaurante restaurante, boolean puedeResponder, boolean puedeReservar) {
+	public VentanaRestaurante2(Comensal comensal, Restaurante restaurante, boolean puedeResponder, boolean puedeReservar) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 498, 445);
 		contentPane = new JPanel();
@@ -62,9 +62,30 @@ public class VentanaRestaurante2 extends JFrame {
 		btnNewButton.setBounds(253, 294, 212, 45);
 		contentPane.add(btnNewButton);
 		
+		btnNewButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if (comensal != null) {
+					VentanaReservas vr = new VentanaReservas(comensal, restaurante);
+					vr.setVisible(true);
+				}
+			}
+		});
+		
 		JButton btnNewButton_1 = new JButton("Valorar");
 		btnNewButton_1.setBounds(25, 349, 218, 45);
 		contentPane.add(btnNewButton_1);
+		btnNewButton_1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				VentanaValoracion ventanavaloracion = new VentanaValoracion(comensal, restaurante);
+				ventanavaloracion.setVisible(true);
+			}
+		});
 		
 		JButton btnNewButton_2 = new JButton("Responder");
 		btnNewButton_2.setBounds(253, 349, 212, 45);
@@ -73,7 +94,7 @@ public class VentanaRestaurante2 extends JFrame {
 		JButton btnNewButton_3 = new JButton("Ver Valoraciones");
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaVerValoraciones frame = new VentanaVerValoraciones();
+				VentanaVerValoraciones frame = new VentanaVerValoraciones(restaurante);
 				frame.setVisible(true);
 			}
 		});
@@ -96,17 +117,8 @@ public class VentanaRestaurante2 extends JFrame {
 		lblNewLabel_3.setBounds(25, 162, 432, 34);
 		contentPane.add(lblNewLabel_3);
 		
-		JLabel lblNewLabel_4 = new JLabel("Tipo de Restaurnate: " + restaurante.getTipo().toString());
+		JLabel lblNewLabel_4 = new JLabel("Tipo de Restaurante: " + restaurante.getTipo().toString());
 		lblNewLabel_4.setBounds(25, 206, 432, 34);
 		contentPane.add(lblNewLabel_4);
-	}
-	
-	public void Reservar() {
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter("resources/Reservas.txt"))) {
-			bw.write("Federico ha realizado una reserva para 4 personas a las 6:00");
-			//bw.write(comensal.getApodo() + "ha realizado una reserva para " + "X" + "a las :" + "");
-		} catch (Exception e) {
-			logger.warning(String.format("Error al escribir en el fichero: %s", e.getMessage()));
-		}
 	}
 }

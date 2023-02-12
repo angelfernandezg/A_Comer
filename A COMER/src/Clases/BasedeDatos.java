@@ -119,7 +119,7 @@ public class BasedeDatos {
 						rs3.getString("Fecha"),
 						rs3.getInt("Estrellas"),
 						rs3.getString("Analisis")));
-				System.out.println(mapaComensales.get(rs3.getString("Comensal")).getApodo() + mapaRestaurantes.get(rs3.getString("Restaurante")).getNombre() + rs3.getString("Fecha") + rs3.getInt("Estrellas") + rs3.getString("Analisis"));
+				//System.out.println(mapaComensales.get(rs3.getString("Comensal")).getApodo() + mapaRestaurantes.get(rs3.getString("Restaurante")).getNombre() + rs3.getString("Fecha") + rs3.getInt("Estrellas") + rs3.getString("Analisis"));
 			}
 			logger.info("Se han cargado correctamente las Valoraciones de la BD");
 		} catch (Exception e) {
@@ -127,6 +127,28 @@ public class BasedeDatos {
 		}
 		return listaValoraciones;
 	}
+	
+//	public List<Valoracion> cargarValoraciones() {
+//		Map<String, Comensal> mapaComensales = cargarComensales();
+//		Map<String, Restaurante> mapaRestaurantes = cargarRestaurantes();
+//		List<Valoracion> listaValoraciones = new ArrayList<>();
+//		String sql3 = "Select * from Valoracion";
+//		try(Statement st = con.createStatement()) {
+//			ResultSet rs3 = st.executeQuery(sql3);
+//			while(rs3.next()) {
+//				listaValoraciones.add(new Valoracion(Comensal.valueOf(rs3.getString("Comensal")),
+//						Restaurante.valueOf(rs3.getString("Restaurante")),
+//						rs3.getString("Fecha"),
+//						rs3.getInt("Estrellas"),
+//						rs3.getString("Analisis")));
+//				//System.out.println(mapaComensales.get(rs3.getString("Comensal")).getApodo() + mapaRestaurantes.get(rs3.getString("Restaurante")).getNombre() + rs3.getString("Fecha") + rs3.getInt("Estrellas") + rs3.getString("Analisis"));
+//			}
+//			logger.info("Se han cargado correctamente las Valoraciones de la BD");
+//		} catch (Exception e) {
+//			logger.warning(String.format("Error de BD al cargar las Valoraciones: %s", e.getMessage()));
+//		}
+//		return listaValoraciones;
+//	}
 	
 	public List<Respuesta> cargarRespuestas() {
 		Map<String, Comensal> mapaComensales = cargarComensales();
@@ -147,6 +169,26 @@ public class BasedeDatos {
 		}
 		return listaRespuestas;
 	}
+	
+//	public List<Respuesta> cargarRespuestas() {
+//		Map<String, Comensal> mapaComensales = cargarComensales();
+//		Map<String, Restaurante> mapaRestaurantes = cargarRestaurantes();
+//		List<Respuesta> listaRespuestas = new ArrayList<>();
+//		String sql4 = "Select * from Respuesta";
+//		try (Statement st = con.createStatement()) {
+//			ResultSet rs4 = st.executeQuery(sql4);
+//			while(rs4.next()) {
+//				listaRespuestas.add(new Respuesta(Restaurante.valueOf(rs4.getString("Restaurante")),
+//						Comensal.valueOf(rs4.getString("Comensal")),
+//						rs4.getString("Fecha"),
+//						rs4.getString("Respuesta")));
+//			}
+//			logger.info("Se han cargado correctamente las Respuestas de la BD");
+//		} catch (Exception e) {
+//			logger.warning(String.format("Error de BD al cargar las Respuestas: %s", e.getMessage()));
+//		}
+//		return listaRespuestas;
+//	}
 	
 	public Comensal iniciarSesionComensal(String correo, String contrasenya) {
 		Comensal resultado = new Comensal();
