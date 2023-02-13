@@ -84,21 +84,7 @@ public class VentanaVerValoraciones extends JFrame {
 		
 		verValoracionesYRespuestas(modelo, restaurante);
 		
-		table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
-			
-			public Component getTableCellRedererComponent(TableCellRenderer renderer, int row, int column) {
-			      Component component = getTableCellRedererComponent(renderer, row, column);
-			      int value = (int) table.getValueAt(row, 4); 
-			      if (value <= 2) {
-			         component.setBackground(Color.RED);
-			      } else if (value <= 4) {
-			         component.setBackground(Color.GREEN);
-			      } else {
-			         component.setBackground(Color.YELLOW);
-			      }
-			      return component;
-			   }
-		});
+		//table.setDefaultRenderer(Object.class, new StarRenderer());
 	}
 	
 	public void verValoracionesYRespuestas(DefaultTableModel modelo, Restaurante restaurante) {

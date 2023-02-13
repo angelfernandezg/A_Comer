@@ -101,7 +101,7 @@ public class VentanaRestaurante2 extends JFrame {
 		});
 		
 		
-		JButton btnNewButton_3 = new JButton("Ver Valoraciones");
+		JButton btnNewButton_3 = new JButton("Ver Valoraciones y Respuestas");
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VentanaVerValoraciones frame = new VentanaVerValoraciones(restaurante);
